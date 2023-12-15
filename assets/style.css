@@ -18,3 +18,12 @@ header{
     align-items:center;
     justify-content:center;
 }
+
+.choice-button{
+    background-color:pink;
+    height:2rem;
+    width:15rem;
+    margin:.5rem;
+    border-radius:.5rem;
+
+}

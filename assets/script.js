@@ -59,16 +59,31 @@ function startQuiz(){
     }
 }
 
+
 function displayQuestion(index){
         var questionTitle = $('<h2></h2>').text(questions[index].title);
         questionContainer.append(questionTitle);
-        //Loop through questions.choices and make each one a button
-        for (let i = 0; i < questions[index].choices.length; i++){
-        var listChoices = $('<button></button>').text(questions[index].choices[i]);
-        questionContainer.append(listChoices);
-        }
+        //Figure out how to loop through these questions.choices and make each one a button
+        var choice1 = $('<button class="choice-button"></button>').text(questions[index].choices[0]);
+        choice1.on('click', function(){ checkIfCorrect(choice1)});
+        var choice2 = $('<button class="choice-button"></button>').text(questions[index].choices[1]);
+        choice2.on('click', function(){ checkIfCorrect(choice2)});
+        var choice3 = $('<button class="choice-button"></button>').text(questions[index].choices[2]);
+        choice3.on('click', function(){ checkIfCorrect(choice3)});
+        var choice4 = $('<button class="choice-button"></button>').text(questions[index].choices[3]);
+        choice4.on('click', function(){ checkIfCorrect(choice4)});
+        $('').addClass('choice-button');
+        questionContainer.append(choice1, choice2, choice3, choice4);
 
-}
+        function checkIfCorrect(choice){
+            if(choice.text() === questions[index].answer){
+                console.log('true');
+            } else {
+                console.log('false, bitch');
+            }
+        } //Get this function to kick us out of the question somehow.  
+            //Maybe clear everything in a seperate function and then populate the next question?
+    }
 
 
 startBtn.on('click', startQuiz);
