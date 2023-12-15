@@ -17,3 +17,29 @@ var questions = [
     }
 ]
 
+var timerCount = 90;
+var timer = $('#timer');
+timer.text('Timer: ' + timerCount); //Set timer count to 0 until game starts
+
+var startContainer = $('#start-screen');
+var startBtn = $('#start-btn');
+var questionContainer = $('#question-container');
+
+
+function startQuiz(){
+    startContainer.hide();
+    var timerInterval = setInterval(countDown, 1000);
+    
+    function countDown(){
+        timer.text('Timer: ' + timerCount);
+        if (timerCount === 0){
+            clearInterval(timerInterval);
+            console.log('Hello');
+        } else {
+        timerCount --;
+        }
+    }
+}
+
+
+startBtn.on('click', startQuiz);

@@ -5,17 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./assets/style.css">
     <title>Java-Quiz</title>
+    <!--Jquery CDN-->
+    <script
+        src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+        crossorigin="anonymous">
+    </script>
 </head>
 <body>
     <header>
         <h4>View high scores</h4>
-        <h4 id="timer">Timer: </h4>
+        <h4 id="timer"></h4>
     </header>
     <section id="game-container">
         <div id="start-screen">
             <h2>Coding Quiz Challenge</h2>
             <p>Try to answer as many questions as possible before the timer runs out!  An incorrect answer will decrease the timer</p>
-            <button id="start-btn">Start The Game!</button>
+            <button id = "start-btn">Start The Game!</button>
         </div>
         <div id="question-container">
 
@@ -25,11 +31,6 @@
     <script 
         src="./assets/script.js">
     </script>
-    <!--Jquery CDN-->
-    <script
-        src="https://code.jquery.com/jquery-3.7.1.js"
-        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
-        crossorigin="anonymous">
-    </script>
+   
 </body>
 </html>
