@@ -17,7 +17,7 @@ var questions = [
     }
 ]
 //Shuffle the questions array so that the questions appear in a different order every run.
-function shuffle(array){
+function shuffleArray(array){
     let currentIndex = array.length, randomIndex;
 
     while(currentIndex > 0) {
@@ -41,8 +41,9 @@ var questionContainer = $('#question-container');
 
 function startQuiz(){
     startContainer.hide();
-    shuffle(questions);
+    shuffleArray(questions);
     var timerInterval = setInterval(countDown, 1000);
+
     //Create Elements from the questions array and append them to the questioncontainer.
 
 
@@ -58,8 +59,15 @@ function startQuiz(){
     }
 }
 
-function displayQuestion(randomlySortedQuestions){
-    var question = 0;
+function displayQuestion(index){
+        var questionTitle = $('<h2></h2>').text(questions[index].title);
+        questionContainer.append(questionTitle);
+        //Loop through questions.choices and make each one a button
+        for (let i = 0; i < questions[index].choices.length; i++){
+        var listChoices = $('<button></button>').text(questions[index].choices[i]);
+        questionContainer.append(listChoices);
+        }
+
 }
 
 
