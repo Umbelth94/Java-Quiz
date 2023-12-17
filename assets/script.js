@@ -19,17 +19,15 @@ var questions = [
 //Shuffle the questions array so that the questions appear in a different order every run.
 function shuffleArray(array){
     let currentIndex = array.length, randomIndex;
-
     while(currentIndex > 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
         currentIndex--;
-
         [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
     }
     return array;
 }
 
-
+let currentQuestion = 0;
 var timerCount = 90;
 var timer = $('#timer');
 timer.text('Timer: ' + timerCount); //Set timer count to 0 until game starts
@@ -39,10 +37,13 @@ var startBtn = $('#start-btn');
 var questionContainer = $('#question-container');
 
 
+
 function startQuiz(){
     startContainer.hide();
     shuffleArray(questions);
     var timerInterval = setInterval(countDown, 1000);
+    //Make a While loop in order to keep question up until it's answered, and populate the next? 
+    displayQuestion(currentQuestion);
 
     //Create Elements from the questions array and append them to the questioncontainer.
 
@@ -50,7 +51,7 @@ function startQuiz(){
 
     function countDown(){
         timer.text('Timer: ' + timerCount);
-        if (timerCount === 0){
+        if (timerCount <= 0){
             clearInterval(timerInterval);
             console.log('Hello');
         } else {
@@ -61,6 +62,7 @@ function startQuiz(){
 
 
 function displayQuestion(index){
+        questionContainer.empty();
         var questionTitle = $('<h2></h2>').text(questions[index].title);
         questionContainer.append(questionTitle);
         //Figure out how to loop through these questions.choices and make each one a button
@@ -76,9 +78,17 @@ function displayQuestion(index){
         questionContainer.append(choice1, choice2, choice3, choice4);
 
         function checkIfCorrect(choice){
+            currentQuestion ++;
+
+            if (currentQuestion < questions.length){
+                displayQuestion(currentQuestion);
+            } else if (currentQuestion = questions.length){
+                questionContainer.hide();
+            }
             if(choice.text() === questions[index].answer){
-                console.log('true');
+                console.log('correct');
             } else {
+                timerCount -= 10;
                 console.log('false, bitch');
             }
         } //Get this function to kick us out of the question somehow.  
