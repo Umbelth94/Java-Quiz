@@ -27,15 +27,24 @@ function shuffleArray(array){
     return array;
 }
 
+var scoresRecord = [];
+var correctAnswers = 0;
+var incorrectAnswers = 0;
 let currentQuestion = 0;
 var timerCount = 90;
 var timer = $('#timer');
 timer.text('Timer: ' + timerCount); //Set timer count to 0 until game starts
 
 var startContainer = $('#start-screen');
-var startBtn = $('#start-btn');
+var startBtn = $('.start-btn');
 var questionContainer = $('#question-container');
 var saveScoreContainer = $('#save-score-container');
+var saveAnswerContainer = $('#answer-score');
+var scoreTextContainer = $('#score-text');
+var submitBtnEl = $('#submit-btn');
+var nameInputEl = document.getElementById('name');
+var scoreboardContainer = $('#scoreboard-container');
+var scoresListEl = $('#scores');
 saveScoreContainer.hide();
 
 
@@ -44,13 +53,10 @@ function startQuiz(){
     startContainer.hide();
     shuffleArray(questions);
     var timerInterval = setInterval(countDown, 1000);
-    //Make a While loop in order to keep question up until it's answered, and populate the next? 
     displayQuestion(currentQuestion);
-    if (currentQuestion == questions.length){
-        clearInterval(timerInterval);
-    };
-
-    //Create Elements from the questions array and append them to the questioncontainer.
+    // if (currentQuestion == questions.length){
+    //     clearInterval(timerInterval);
+    // };
 
 
 
@@ -59,6 +65,8 @@ function startQuiz(){
         if (timerCount <= 0){
             clearInterval(timerInterval);
             console.log('Hello');
+            timerCount = 0;
+            timer.text('Timer: ' + timerCount);
         } else if (currentQuestion === questions.length){
             clearInterval(timerInterval);
         } else {
@@ -85,12 +93,15 @@ function displayQuestion(index){
         questionContainer.append(choice1, choice2, choice3, choice4);
 
         function checkIfCorrect(choice){
+            var correctPopUp = $("<h3></h3>").text("Correct!");
             if(choice.text() === questions[index].answer){
-                var correctPopUp = $("<h3></h3>").text("Correct!");
+                correctAnswers ++;
                 questionContainer.append(correctPopUp);
             } else {
                 timerCount -= 10;
-                console.log('false, bitch');
+                incorrectAnswers ++;
+                correctPopUp.text('Incorrect! :(');
+                questionContainer.append(correctPopUp);
             }
             setTimeout(function() {
                 currentQuestion ++;
@@ -110,6 +121,34 @@ function displayQuestion(index){
 
 function presentWinScreen(){
     var congrats = $('<h3></h3>').text('Congratulations, you answered all the questions!  Your score is: ' + timerCount);
-    saveScoreContainer.append(congrats);
+    var correctAnswersEl = $('<h4></h4>').text('Correct answers: ' + correctAnswers);
+    var incorrectAnswersEl = $('<h4></h4>').text('Incorrect answers: ' + incorrectAnswers);
+    scoreTextContainer.append(congrats)
+    saveAnswerContainer.append(correctAnswersEl, incorrectAnswersEl);
 }
 startBtn.on('click', startQuiz);
+
+
+submitBtnEl.on('click', function(event){;
+    event.preventDefault();
+    saveScoreContainer.hide();
+    scoreboardContainer.show();
+    saveScore();
+    displayRecord();
+});
+
+
+function saveScore(){
+    var initialsAndScore = {
+        initials: nameInputEl.value,
+        score:timerCount,
+    }
+    scoresRecord.push(initialsAndScore.initials, initialsAndScore.score);
+    localStorage.setItem('userAndScore', JSON.stringify(initialsAndScore));
+}
+
+
+function displayRecord(){
+    var userScore = JSON.parse(localStorage.getItem('userAndScore'));
+    scoresListEl.text(userScore.initials + ' ' + userScore.score);
+}
