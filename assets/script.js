@@ -27,40 +27,75 @@ function shuffleArray(array){
     return array;
 }
 
-var scoresRecord = [];
+class HighscoreBoard {
+    constructor() {
+      this.scores = JSON.parse(localStorage.getItem('highscores')) || [];
+    }
+  
+    addScore(name, score) {
+      this.scores.push({ name, score });
+      this.scores.sort((a, b) => b.score - a.score); // Sort in descending order
+      localStorage.setItem('highscores', JSON.stringify(this.scores));
+    }
+
+    clearHighscores(){
+        if (confirm('Are you sure?  This will delete the local score storage')){
+        console.log('clear highscores');
+        this.scores = [];
+        localStorage.removeItem('highscores');
+        this.displayHighscores();}
+        else {
+            return;
+        }
+    }
+    
+  
+    displayHighscores() {
+      this.scores.forEach((entry) => {
+        var newScoreListing = $('<li></li>').text(`${entry.name}: ${entry.score}`)
+        scoresListEl.prepend(newScoreListing);
+      });
+    }}
+  
+var isScoreboardVisible = false;
+const highscoreBoard = new HighscoreBoard();
 var correctAnswers = 0;
 var incorrectAnswers = 0;
 let currentQuestion = 0;
-var timerCount = 90;
+var timerCount = 20;
 var timer = $('#timer');
-timer.text('Timer: ' + timerCount); //Set timer count to 0 until game starts
+timer.text('Timer: ' + timerCount); //Set timer count to 90 until game starts
 
 var startContainer = $('#start-screen');
-var startBtn = $('.start-btn');
+var startBtn = $('#start-btn');
+var restartBtn = $('#restart-btn');
 var questionContainer = $('#question-container');
 var saveScoreContainer = $('#save-score-container');
 var saveAnswerContainer = $('#answer-score');
 var scoreTextContainer = $('#score-text');
 var submitBtnEl = $('#submit-btn');
-var nameInputEl = document.getElementById('name');
+var nameInputEl = $('#name');
 var scoreboardContainer = $('#scoreboard-container');
 var scoresListEl = $('#scores');
+var viewHighscoreButton = $('#view-hs-page');
+var clearButton = $('#clear-btn');
 saveScoreContainer.hide();
+scoreboardContainer.hide();
 
 
 
 function startQuiz(){
+    timerCount = 5;
     startContainer.hide();
+    scoreboardContainer.hide();
+    questionContainer.show();
+    currentQuestion = 0;
     shuffleArray(questions);
     var timerInterval = setInterval(countDown, 1000);
     displayQuestion(currentQuestion);
-    // if (currentQuestion == questions.length){
-    //     clearInterval(timerInterval);
-    // };
-
-
-
-    function countDown(){
+ 
+       function countDown(){
+        
         timer.text('Timer: ' + timerCount);
         if (timerCount <= 0){
             clearInterval(timerInterval);
@@ -103,6 +138,7 @@ function displayQuestion(index){
                 correctPopUp.text('Incorrect! :(');
                 questionContainer.append(correctPopUp);
             }
+            
             setTimeout(function() {
                 currentQuestion ++;
                 if (currentQuestion < questions.length){
@@ -111,11 +147,8 @@ function displayQuestion(index){
                     questionContainer.hide();
                     saveScoreContainer.show();
                     presentWinScreen();
-    
                 }
-
             }, 800);
-
         }
     }
 
@@ -127,28 +160,33 @@ function presentWinScreen(){
     saveAnswerContainer.append(correctAnswersEl, incorrectAnswersEl);
 }
 startBtn.on('click', startQuiz);
+restartBtn.on('click',startQuiz);
 
 
 submitBtnEl.on('click', function(event){;
     event.preventDefault();
     saveScoreContainer.hide();
     scoreboardContainer.show();
-    saveScore();
-    displayRecord();
+    highscoreBoard.addScore(nameInputEl.val(), timerCount)
+    highscoreBoard.displayHighscores();;
 });
 
-
-function saveScore(){
-    var initialsAndScore = {
-        initials: nameInputEl.value,
-        score:timerCount,
+viewHighscoreButton.on('click',function(){
+    if( !isScoreboardVisible){
+        console.log('displaying scoreboard');
+        saveScoreContainer.hide();
+        startContainer.hide();
+        scoreboardContainer.show();
+        highscoreBoard.displayHighscores();
+        isScoreboardVisible = true;
+    } else {
+        isScoreboardVisible = false;
+        return;
     }
-    scoresRecord.push(initialsAndScore.initials, initialsAndScore.score);
-    localStorage.setItem('userAndScore', JSON.stringify(initialsAndScore));
-}
+});
 
+clearButton.on('click', ()=>{
+    highscoreBoard.clearHighscores();
+    highscoreBoard.displayHighscores();
+});
 
-function displayRecord(){
-    var userScore = JSON.parse(localStorage.getItem('userAndScore'));
-    scoresListEl.text(userScore.initials + ' ' + userScore.score);
-}

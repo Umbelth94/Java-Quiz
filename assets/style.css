@@ -11,9 +11,16 @@ header{
     justify-content:space-between;
 }
 
+#view-hs-page{
+    text-decoration:underline;
+    color:salmon;
+    cursor:grab
+}
+
 #game-container,
 #question-container,
-#save-score-container{
+#save-score-container,
+#scoreboard-container{
     display:flex;
     flex-direction:column;
     align-items:center;
@@ -27,6 +34,15 @@ header{
     margin:.5rem;
     border-radius:.5rem;
 
+}
+
+#start-screen{
+    display:flex;
+    flex-direction:column;
+    
+}
+#start-screen button {
+align-self:center;
 }
 
 #answer-score{

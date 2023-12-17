@@ -14,14 +14,14 @@
 </head>
 <body>
     <header>
-        <h4>View high scores</h4>
+        <h4 id="view-hs-page">View high scores</h4>
         <h4 id="timer"></h4>
     </header>
     <section id="game-container">
         <div id="start-screen">
             <h2>Coding Quiz Challenge</h2>
             <p>Try to answer as many questions as possible before the timer runs out!  An incorrect answer will decrease the timer</p>
-            <button class = "start-btn">Start The Game!</button>
+            <button id = "start-btn">Start The Game!</button>
         </div>
         <div id="question-container">
           
@@ -38,8 +38,9 @@
 
         <div id="scoreboard-container">
             <h3>High Scores: </h3>
-            <h5 id="scores"></h5>
-            <button class="start-btn">Play again?</button>
+            <ol id="scores"></ol>
+            <button id="restart-btn">Play again?</button>
+            <button id = 'clear-btn'>Clear Scores</button>
         </div>
     </section>
     <!--Javascript File-->
