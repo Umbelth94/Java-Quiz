@@ -35,6 +35,8 @@ timer.text('Timer: ' + timerCount); //Set timer count to 0 until game starts
 var startContainer = $('#start-screen');
 var startBtn = $('#start-btn');
 var questionContainer = $('#question-container');
+var saveScoreContainer = $('#save-score-container');
+saveScoreContainer.hide();
 
 
 
@@ -44,6 +46,9 @@ function startQuiz(){
     var timerInterval = setInterval(countDown, 1000);
     //Make a While loop in order to keep question up until it's answered, and populate the next? 
     displayQuestion(currentQuestion);
+    if (currentQuestion == questions.length){
+        clearInterval(timerInterval);
+    };
 
     //Create Elements from the questions array and append them to the questioncontainer.
 
@@ -54,6 +59,8 @@ function startQuiz(){
         if (timerCount <= 0){
             clearInterval(timerInterval);
             console.log('Hello');
+        } else if (currentQuestion === questions.length){
+            clearInterval(timerInterval);
         } else {
         timerCount --;
         }
@@ -78,22 +85,31 @@ function displayQuestion(index){
         questionContainer.append(choice1, choice2, choice3, choice4);
 
         function checkIfCorrect(choice){
-            currentQuestion ++;
-
-            if (currentQuestion < questions.length){
-                displayQuestion(currentQuestion);
-            } else if (currentQuestion = questions.length){
-                questionContainer.hide();
-            }
             if(choice.text() === questions[index].answer){
-                console.log('correct');
+                var correctPopUp = $("<h3></h3>").text("Correct!");
+                questionContainer.append(correctPopUp);
             } else {
                 timerCount -= 10;
                 console.log('false, bitch');
             }
-        } //Get this function to kick us out of the question somehow.  
-            //Maybe clear everything in a seperate function and then populate the next question?
+            setTimeout(function() {
+                currentQuestion ++;
+                if (currentQuestion < questions.length){
+                    displayQuestion(currentQuestion);
+                } else if (currentQuestion = questions.length){
+                    questionContainer.hide();
+                    saveScoreContainer.show();
+                    presentWinScreen();
+    
+                }
+
+            }, 800);
+
+        }
     }
 
-
+function presentWinScreen(){
+    var congrats = $('<h3></h3>').text('Congratulations, you answered all the questions!  Your score is: ' + timerCount);
+    saveScoreContainer.append(congrats);
+}
 startBtn.on('click', startQuiz);
