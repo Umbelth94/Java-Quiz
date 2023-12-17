@@ -20,7 +20,8 @@ header{
 #game-container,
 #question-container,
 #save-score-container,
-#scoreboard-container{
+#scoreboard-container,
+#loss-container{
     display:flex;
     flex-direction:column;
     align-items:center;
