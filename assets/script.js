@@ -1,9 +1,7 @@
 //TODO:
-    //Do the README (Priority if this ends up being late)
     //Style the buttons I made somehow
     //Pretty it all up
     //Add more questions (final objective.  Don't wanna add more because playtesting will be weird)
-    //Make the timer more accurate
     //Where did incorrect answers go??
 
 //Array of question objects

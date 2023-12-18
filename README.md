@@ -25,4 +25,6 @@ The questions I used can be found [Here](https://www.interviewbit.com/javascript
 
 ## To Do 
 - Figure out how to stylize the buttons now that I've looped through them all :( 
+- Figure out why it won't append the incorrect answers amount
+
 
