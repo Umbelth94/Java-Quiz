@@ -28,7 +28,7 @@ header{
     justify-content:center;
 }
 
-.choice-button{
+.question-container > button{
     background-color:pink;
     height:2rem;
     width:15rem;

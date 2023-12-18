@@ -1,3 +1,10 @@
+//TODO:
+    //Do the README (Priority if this ends up being late)
+    //Style the buttons I made somehow
+    //Pretty it all up
+    //Add more questions (final objective.  Don't wanna add more because playtesting will be weird)
+    //Make the timer more accurate
+
 //Array of question objects
 var questions = [
     {
@@ -130,7 +137,7 @@ function displayQuestion(index){
         questionContainer.empty();
         // var questionTitle = $('<h2></h2>').text(questions[index].title);
         // questionContainer.append(questionTitle);
-        //Figure out how to loop through these questions.choices and make each one a button
+        // Figure out how to loop through these questions.choices and make each one a button
         // var choice1 = $('<button class="choice-button"></button>').text(questions[index].choices[0]);
         // choice1.on('click', function(){ checkIfCorrect(choice1)});
         // var choice2 = $('<button class="choice-button"></button>').text(questions[index].choices[1]);
@@ -145,12 +152,9 @@ function displayQuestion(index){
        
         var questionTitle = $('<h2></h2>').text(questions[index].title);
         questionContainer.append(questionTitle);
-        //Loop through questions.choices and make each one a button
         for (let i = 0; i < questions[index].choices.length; i++){
-        var listChoices = $('<button class="choice-btn">').text(questions[index].choices[i]);
-
-        // console.log(listChoices[index].choices[i]);
-        questionContainer.append(listChoices);
+            var listChoices = $('<button class="choice-btn">').text(questions[index].choices[i]);
+            questionContainer.append(listChoices);
         }
         $('.choice-btn').on('click',function(){
             var choice = $(this).text();
