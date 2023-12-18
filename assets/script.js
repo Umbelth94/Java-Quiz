@@ -44,17 +44,16 @@ class HighscoreBoard {
         this.scores = [];
         localStorage.removeItem('highscores');
         this.displayHighscores();}
-        else {
-            return;
-        }
     }
     
   
     displayHighscores() {
-      this.scores.forEach((entry) => {
-        var newScoreListing = $('<li></li>').text(`${entry.name}: ${entry.score}`)
-        scoresListEl.prepend(newScoreListing);
-      });
+        scoresListEl.empty();
+        console.log(this.scores);
+        this.scores.forEach((entry) => {
+            var newScoreListing = $('<li></li>').text(`${entry.name}: ${entry.score}`)
+            scoresListEl.append(newScoreListing);
+            });
     }}
   
 var isScoreboardVisible = false;
@@ -62,7 +61,7 @@ const highscoreBoard = new HighscoreBoard();
 var correctAnswers = 0;
 var incorrectAnswers = 0;
 let currentQuestion = 0;
-var timerCount = 20;
+var timerCount = 90;
 var timer = $('#timer');
 timer.text('Timer: ' + timerCount); //Set timer count to 90 until game starts
 
@@ -84,9 +83,20 @@ saveScoreContainer.hide();
 scoreboardContainer.hide();
 lossContainer.hide();
 
-
+function init(){
+    timerCount = 90;
+    timer.text('Timer ' + timerCount);
+    saveScoreContainer.hide();
+    scoreboardContainer.hide();
+    lossContainer.hide();
+}
 
 function startQuiz(){
+    scoresListEl.textContent='';
+    correctAnswers=0;
+    incorrectAnswers=0;
+    // scoreTextContainer.text('');
+    // scoreboardContainer.text('');
     timerCount = 90;
     startContainer.hide();
     scoreboardContainer.hide();
@@ -118,27 +128,45 @@ function startQuiz(){
 
 function displayQuestion(index){
         questionContainer.empty();
+        // var questionTitle = $('<h2></h2>').text(questions[index].title);
+        // questionContainer.append(questionTitle);
+        //Figure out how to loop through these questions.choices and make each one a button
+        // var choice1 = $('<button class="choice-button"></button>').text(questions[index].choices[0]);
+        // choice1.on('click', function(){ checkIfCorrect(choice1)});
+        // var choice2 = $('<button class="choice-button"></button>').text(questions[index].choices[1]);
+        // choice2.on('click', function(){ checkIfCorrect(choice2)});
+        // var choice3 = $('<button class="choice-button"></button>').text(questions[index].choices[2]);
+        // choice3.on('click', function(){ checkIfCorrect(choice3)});
+        // var choice4 = $('<button class="choice-button"></button>').text(questions[index].choices[3]);
+        // choice4.on('click', function(){ checkIfCorrect(choice4)});
+        // $('').addClass('choice-button');
+        // questionContainer.append(choice1, choice2, choice3, choice4);
+
+       
         var questionTitle = $('<h2></h2>').text(questions[index].title);
         questionContainer.append(questionTitle);
-        //Figure out how to loop through these questions.choices and make each one a button
-        var choice1 = $('<button class="choice-button"></button>').text(questions[index].choices[0]);
-        choice1.on('click', function(){ checkIfCorrect(choice1)});
-        var choice2 = $('<button class="choice-button"></button>').text(questions[index].choices[1]);
-        choice2.on('click', function(){ checkIfCorrect(choice2)});
-        var choice3 = $('<button class="choice-button"></button>').text(questions[index].choices[2]);
-        choice3.on('click', function(){ checkIfCorrect(choice3)});
-        var choice4 = $('<button class="choice-button"></button>').text(questions[index].choices[3]);
-        choice4.on('click', function(){ checkIfCorrect(choice4)});
-        $('').addClass('choice-button');
-        questionContainer.append(choice1, choice2, choice3, choice4);
+        //Loop through questions.choices and make each one a button
+        for (let i = 0; i < questions[index].choices.length; i++){
+        var listChoices = $('<button class="choice-btn">').text(questions[index].choices[i]);
+
+        // console.log(listChoices[index].choices[i]);
+        questionContainer.append(listChoices);
+        }
+        $('.choice-btn').on('click',function(){
+            var choice = $(this).text();
+            checkIfCorrect(choice);
+        })
 
         function checkIfCorrect(choice){
             var correctPopUp = $("<h3></h3>").text("Correct!");
-            if(choice.text() === questions[index].answer){
+            console.log(choice, questions[index].answer)
+            if(choice === questions[index].answer){
+                console.log('correct')
                 correctAnswers ++;
                 questionContainer.append(correctPopUp);
             } else {
                 timerCount -= 5;
+                console.log('incorrect');
                 incorrectAnswers ++;
                 correctPopUp.text('Incorrect! :(');
                 questionContainer.append(correctPopUp);
@@ -158,11 +186,13 @@ function displayQuestion(index){
     }
 
 function presentWinScreen(){
+    // scoreTextContainer.empty();
+    // saveAnswerContainer.empty();
     var congrats = $('<h3></h3>').text('Congratulations, you answered all the questions!  Your score is: ' + timerCount);
     var correctAnswersEl = $('<h4></h4>').text('Correct answers: ' + correctAnswers);
     var incorrectAnswersEl = $('<h4></h4>').text('Incorrect answers: ' + incorrectAnswers);
-    scoreTextContainer.append(congrats)
-    saveAnswerContainer.append(correctAnswersEl, incorrectAnswersEl);
+    scoreTextContainer.html(congrats)
+    saveAnswerContainer.html(correctAnswersEl, incorrectAnswersEl);
 }
 
 function presentLossScreen(){
@@ -200,6 +230,6 @@ viewHighscoreButton.on('click',function(){
 
 clearButton.on('click', ()=>{
     highscoreBoard.clearHighscores();
-    highscoreBoard.displayHighscores();
+    // highscoreBoard.displayHighscores();
 });
 
