@@ -4,6 +4,7 @@
     //Pretty it all up
     //Add more questions (final objective.  Don't wanna add more because playtesting will be weird)
     //Make the timer more accurate
+    //Where did incorrect answers go??
 
 //Array of question objects
 var questions = [
@@ -86,9 +87,6 @@ var scoreboardContainer = $('#scoreboard-container');
 var scoresListEl = $('#scores');
 var viewHighscoreButton = $('#view-hs-page');
 var clearButton = $('#clear-btn');
-saveScoreContainer.hide();
-scoreboardContainer.hide();
-lossContainer.hide();
 
 function init(){
     timerCount = 90;
@@ -128,6 +126,7 @@ function startQuiz(){
             clearInterval(timerInterval);
         } else {
         timerCount --;
+        timer.text('Timer: ' + timerCount);
         }
     }
 }
@@ -190,8 +189,6 @@ function displayQuestion(index){
     }
 
 function presentWinScreen(){
-    // scoreTextContainer.empty();
-    // saveAnswerContainer.empty();
     var congrats = $('<h3></h3>').text('Congratulations, you answered all the questions!  Your score is: ' + timerCount);
     var correctAnswersEl = $('<h4></h4>').text('Correct answers: ' + correctAnswers);
     var incorrectAnswersEl = $('<h4></h4>').text('Incorrect answers: ' + incorrectAnswers);
@@ -237,3 +234,4 @@ clearButton.on('click', ()=>{
     // highscoreBoard.displayHighscores();
 });
 
+init();

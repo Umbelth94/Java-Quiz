@@ -2,6 +2,8 @@
 
 ## Description
 
+[LiveLink](https://umbelth94.github.io/Java-Quiz/)
+
 In this project, we attempted to stretch our knowledge of web-API's and DOM manipulation to make a timed Javascript Quiz that utilizes local data storage to keep track of personal records, with the points for a quiz being based on how much time you have left after answering all of the questions.
 
 I set up the quiz questions using an Array, and then randomized the order of it so that every run of the quiz display questions in a different order.
@@ -21,5 +23,6 @@ I used Jquery, and got some help from chatGPT in regards to building a class.  I
 
 The questions I used can be found [Here](https://www.interviewbit.com/javascript-mcq/)
 
-
+## To Do 
+- Figure out how to stylize the buttons now that I've looped through them all :( 
 
