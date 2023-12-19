@@ -77,6 +77,7 @@ var restartBtn = $('.restart-btn');
 var questionContainer = $('#question-container');
 var saveScoreContainer = $('#save-score-container');
 var lossContainer = $('#loss-container');
+var lossMessageContainer = $('#loss-message');
 var saveAnswerContainer = $('#answer-score');
 var scoreTextContainer = $('#score-text');
 var submitBtnEl = $('#submit-btn');
@@ -150,10 +151,11 @@ function displayQuestion(index){
         var questionTitle = $('<h2></h2>').text(questions[index].title);
         questionContainer.append(questionTitle);
         for (let i = 0; i < questions[index].choices.length; i++){
-            var listChoices = $('<button class="choice-btn">').text(questions[index].choices[i]);
+            var listChoices = $('<button class="choice-button">').text(questions[index].choices[i]);
+            // listChoices.addClass('choice-button');
             questionContainer.append(listChoices);
         }
-        $('.choice-btn').on('click',function(){
+        $('.choice-button').on('click',function(){
             var choice = $(this).text();
             checkIfCorrect(choice);
         })
@@ -182,24 +184,27 @@ function displayQuestion(index){
                     saveScoreContainer.show();
                     presentWinScreen();
                 }
-            }, 500);
+            }, 300);
         }
     }
 
 function presentWinScreen(){
+    scoreTextContainer.empty();
+    saveAnswerContainer.empty();
     var congrats = $('<h3></h3>').text('Congratulations, you answered all the questions!  Your score is: ' + timerCount);
     var correctAnswersEl = $('<h4></h4>').text('Correct answers: ' + correctAnswers);
     var incorrectAnswersEl = $('<h4></h4>').text('Incorrect answers: ' + incorrectAnswers);
-    scoreTextContainer.html(congrats)
-    saveAnswerContainer.html(correctAnswersEl, incorrectAnswersEl);
+    scoreTextContainer.append(congrats)
+    saveAnswerContainer.append(correctAnswersEl, incorrectAnswersEl);
 }
 
 function presentLossScreen(){
+    $('#loss-message').empty();
     var getGood = $('<h3></h3>').text('Oof, you ran out of time!  Looks like you will need to practice more');
     var correctAnswersEl = $('<h4></h4>').text('Correct answers: ' + correctAnswers);
     var incorrectAnswersEl = $('<h4></h4>').text('Incorrect answers: ' + incorrectAnswers);
-    lossContainer.prepend(getGood)
-    lossContainer.prepend(correctAnswersEl, incorrectAnswersEl);
+    lossMessageContainer.append(getGood)
+    lossMessageContainer.append(correctAnswersEl, incorrectAnswersEl);
 }
 startBtn.on('click', startQuiz);
 restartBtn.on('click',startQuiz);
