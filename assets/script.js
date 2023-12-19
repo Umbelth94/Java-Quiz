@@ -177,7 +177,7 @@ function startQuiz(){
             presentLossScreen();
             timerCount = 0;
             timer.text('Timer: ' + timerCount);
-        } else if (currentQuestion === questions.length){
+        } else if (currentQuestion === 10){
             clearInterval(timerInterval);
         } else {
         timerCount --;
@@ -233,9 +233,9 @@ function displayQuestion(index){
             
             setTimeout(function() {
                 currentQuestion ++;
-                if (currentQuestion < questions.length){
+                if (currentQuestion < 10){
                     displayQuestion(currentQuestion);
-                } else if (currentQuestion = questions.length){
+                } else if (currentQuestion = 10){
                     questionContainer.hide();
                     saveScoreContainer.show();
                     presentWinScreen();
