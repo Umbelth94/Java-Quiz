@@ -20,7 +20,63 @@ var questions = [
         title:'Which of the following methods is used to access HTML elements using Javascript?',
         choices:['getElementbyId()','getElementsByClassName()','Both A and B','None of the above'],
         answer:'Both A and B'
+    },
+    { 
+        title:'Upon encountering empty statements, what does the Javascript Interpreter do?',
+        choices:['Throws an error', 'Ignores the statements', 'Gives a warning', 'None of the above'],
+        answer:'Ignores the statements'
+    },
+    {
+        title:'Which of the following methods can be used to display data in some form using Javascript?',
+        choices:['document.write()','console.log()','window.alert()','All of the above'],
+        answer:'All of the above'
+    },
+    {
+        title:'How can a datatype be declared to be a constant type?',
+        choices:['const','var','let','constant'],
+        answer:'const'
+    },
+    {
+        title:'When the switch statement matches the expression with the given labels, how is the comparison done?',
+        choices:['Both the datatype and the result of the expression are compared','Only the datatype of the expression is compared','Only the value of the expression is compared','None of the above'],
+        answer:'Both the datatype and the result of the expression are compared'
+    },
+    {
+        title:'What keyword is used to check whether a given property is valid or not?',
+        choices:['in','is in','exists','lies'],
+        answer:'in'
+    },
+    {
+        title:'What is the use of the <noscript> tag in Javascript?',
+        choices:['The contents are displayed by non-JS-based browsers','Clears all the cookies and cache','Both A and B','None of the above'],
+        answer:'The contents are displayed by non-JS-based browsers'
+    },
+    {
+        title:'When an operators value is NULL, the typeof returned by the unary operator is: ',
+        choices:['Boolean','Undefined','Object','Integer'],
+        answer:'Undefined'
+    },
+    {
+        title:'What does the Javascript "debugger" statement do?',
+        choices:['It will debug all the errors in the program at runtime','It acts as a breakpoint in a program','It will debug error in the current statement if any','All of the above'],
+        answer:'It acts as a breakpoint in a program'
+    },
+    {
+        title:'What is the output of the following code snippet? print(NaN === NaN)',
+        choices:['true','false','undefined','error'],
+        answer:'false'
+    },
+    {
+        title:'What will be the output of the following code snippet? print(typeof(NaN));',
+        choices:['Object','Number','String','None of the above'],
+        answer:'Number'
+    },
+    {
+        title:'What does the \'toLocateString\' method do in JS?',
+        choices:['Returns a localised object representation','Returns a parsed string','Returns a localized string representation of an object','None of the above'],
+        answer:'Returns a localized string representation of an object'
     }
+
 ]
 //Shuffle the questions array so that the questions appear in a different order every run.
 function shuffleArray(array){
